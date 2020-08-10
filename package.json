@@ -1,0 +1,21 @@
+{
+  "name": "fp",
+  "version": "1.0.0",
+  "description": "Javascript Functional Programming",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -o -p 3322 -s",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silent181/fp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silent181/fp/issues"
+  },
+  "homepage": "https://github.com/silent181/fp#readme"
+}

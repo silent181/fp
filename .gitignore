@@ -1,0 +1,9 @@
+.idea/
+dist/
+node_modules/
+.DS_Store
+*.log
+*.swp
+*.tgz
+*.zip
+.vscode/
