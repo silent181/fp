@@ -1,2 +1,4 @@
 # fp
-Javascript Functional Programming
+## Javascript Functional Programming
+- npm install http-server -g
+- npm start
