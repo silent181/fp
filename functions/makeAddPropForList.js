@@ -7,7 +7,7 @@ export default function makeAddPropForList(...args) {
     return (list = []) => list.map((item, index, array) => {
         if (hasMultipleKvs) {
             const addedProps = keyValues.reduce(
-                (props, { key, val, overwritten }) => getNewItem(
+                (props, { key, val, overwritten }) => addProp(
                     item,
                     key,
                     val,
@@ -24,19 +24,19 @@ export default function makeAddPropForList(...args) {
             };
         }
 
-        return getNewItem(
+        return addProp(
             item,
             key,
             val,
             overwritten,
             index,
-            array,
+            array
         );
     })
 }
 
 // 若props传一个对象，则表示有多条prop，在keyValues.reduce方法里执行
-function getNewItem(
+function addProp(
     item,
     key,
     val,
@@ -45,16 +45,14 @@ function getNewItem(
     array,
     props
 ) {
-    const canSkipKey = !overwritten && item[key] != null;
-    const isPropsType = isObject(props);
+    const shouldSkipKey = !overwritten && item[key] != null;
+    const ret = isObject(props) ? props : item;
 
-    if (canSkipKey) {
-        return isPropsType ? props : item;
+    if (shouldSkipKey) {
+        return ret;
     }
 
     const value = isFunction(val) ? val(item, index, array) : val;
-    const ret = isPropsType ? props : item;
-
     return {
         ...ret,
         [key]: value
@@ -68,12 +66,10 @@ function getArguments(args) {
     let keyValues = [];
 
     if (Array.isArray(args[0])) {
-        keyValues = args[0].map(a => {
-            return {
-                ...a,
-                overwritten: a.overwritten !== false
-            }
-        });
+        keyValues = args[0].map(a => ({
+            ...a,
+            overwritten: a.overwritten !== false
+        }));
     } else {
         [key, val, overwritten] = args;
     }
