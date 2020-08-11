@@ -1,6 +1,6 @@
-"use strict";
-exports.__esModule = true;
-var makeAddPropForList_js_1 = require("./functions/makeAddPropForList.js");
+import compose from './functions/compose.js';
+import makeAddPropForList from './functions/makeAddPropForList.js';
+
 var list = [
     {
         age: 23,
@@ -26,19 +26,21 @@ var list = [
         name: 'no age',
         salary: 5000
     },
-];
-var addBoss = makeAddPropForList_js_1["default"]('boss', 'Xiaoming');
-var addTitle = makeAddPropForList_js_1["default"]('title', 'doctor');
-var addAge = makeAddPropForList_js_1["default"]('age', 1111, false);
-var raiseSalary = makeAddPropForList_js_1["default"]('salary', function (item) {
-    var age = item.age, salary = item.salary;
+]
+
+var addBoss = makeAddPropForList('boss', 'Xiaoming')
+var addTitle = makeAddPropForList('title', 'doctor')
+var addAge = makeAddPropForList('age', 1111, false)
+var raiseSalary = makeAddPropForList('salary', item => {
+    const { age, salary } = item;
     return age ? age * 10 + salary : salary;
-});
-var capitalizeName = makeAddPropForList_js_1["default"]('name', function (item) {
-    var name = item.name;
+})
+var capitalizeName = makeAddPropForList('name', item => {
+    const { name } = item;
     return name[0].toUpperCase() + name.slice(1);
-});
-var comprehensiveFunc = makeAddPropForList_js_1["default"]([
+})
+
+var comprehensiveFunc = makeAddPropForList([
     {
         key: 'boss',
         val: 'robin'
@@ -54,20 +56,22 @@ var comprehensiveFunc = makeAddPropForList_js_1["default"]([
     },
     {
         key: 'salary',
-        val: function (item) {
-            var age = item.age, salary = item.salary;
+        val: item => {
+            const { age, salary } = item;
             return age ? age * 10 + salary : salary;
         }
     },
     {
         key: 'name',
-        val: function (item) {
-            var name = item.name;
+        val: item => {
+            const { name } = item;
             return name[0].toUpperCase() + name.slice(1);
         }
     }
-]);
+])
+
 var res = comprehensiveFunc(list);
+
 // var res = compose(
 //     raiseSalary,
 //     addAge,
@@ -75,4 +79,5 @@ var res = comprehensiveFunc(list);
 //     addBoss,
 //     addTitle
 // )(list);
+
 console.log(res);
