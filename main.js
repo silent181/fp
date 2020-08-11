@@ -28,9 +28,18 @@ var list = [
     },
 ]
 
-var addBoss = makeAddPropForList('boss', 'robin')
+var addBoss = makeAddPropForList('boss', 'Xiaoming')
 var addTitle = makeAddPropForList('title', 'doctor')
 var addAge = makeAddPropForList('age', 1111, false)
+var raiseSalary = makeAddPropForList('salary', item => {
+    const { age, salary } = item;
+    return age ? age * 10 + salary : salary;
+})
+var capitalizeName = makeAddPropForList('name', item => {
+    const { name } = item;
+    return name[0].toUpperCase() + name.slice(1);
+})
+
 var comprehensiveFunc = makeAddPropForList([
     {
         key: 'boss',
@@ -51,15 +60,24 @@ var comprehensiveFunc = makeAddPropForList([
             const { age, salary } = item;
             return age ? age * 10 + salary : salary;
         }
+    },
+    {
+        key: 'name',
+        val: item => {
+            const { name } = item;
+            return name[0].toUpperCase() + name.slice(1);
+        }
     }
 ])
 
 var res = comprehensiveFunc(list);
 
 // var res = compose(
+//     raiseSalary,
+//     addAge,
+//     capitalizeName,
 //     addBoss,
-//     addTitle,
-//     addAge
+//     addTitle
 // )(list);
 
 console.log(res);
