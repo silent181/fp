@@ -2,10 +2,10 @@ import { isFunction, isObject } from './utils.js';
 
 export default function makeAddPropForList(...args) {
     const { key, val, overwritten, keyValues } = getArguments(args);
-    const hasMultipleKvs = keyValues.length > 0;
+    const areMultipleProps = keyValues.length > 0;
 
     return (list = []) => list.map((item, index, array) => {
-        if (hasMultipleKvs) {
+        if (areMultipleProps) {
             const addedProps = keyValues.reduce(
                 (props, { key, val, overwritten }) => addProp(
                     item,
@@ -45,10 +45,10 @@ function addProp(
     array,
     props
 ) {
-    const shouldSkipKey = !overwritten && item[key] != null;
+    const shouldSkipCurrentProp = !overwritten && item[key] != null;
     const ret = isObject(props) ? props : item;
 
-    if (shouldSkipKey) {
+    if (shouldSkipCurrentProp) {
         return ret;
     }
 
